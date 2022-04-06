@@ -1,6 +1,11 @@
 ﻿#include "Functions.h"
 #include <windows.h>
 #include <iostream>
+#include <conio.h>
+
+#define PRINT(Expression)\
+     std::cout << "{" #Expression "}: " << (Expression) <<\
+     		std::endl;
 
 enum colors
 {
@@ -34,6 +39,8 @@ void setColor(int text, int background)
 
 void drawMenu(int id)
 {
+    system("cls");
+
     char menu[][60] = {
         "[                          Exit                         ]",
         "[                  Enter count of items                 ]",
@@ -42,9 +49,18 @@ void drawMenu(int id)
 
     for (int i = 0; i < 4; i++)
     {
-        if (i == id && id == 0) setColor(BLACK, RED);
+        if (i == id) std::cout << "   ";
+        if (i == id && id != 0) setColor(BLACK, GREEN);
+        else if (i == id && id == 0) setColor(BLACK, RED);
 
+        std::cout << menu[i] << '\n';
+        setColor(WHITE, BLACK);
     }
+}
+
+void setListSize()
+{
+
 }
 
 void mainMenu()
@@ -54,9 +70,23 @@ void mainMenu()
 
     while (isEnable)
     {
-        switch (id)
+        drawMenu(id);
+        switch (_getch())
         {
-
+        case 'w':
+            if (id != 0) id--;
+            else id = 3;
+            break;
+        case 's':
+            if (id != 3) id++;
+            else id = 0;
+            break;
+        case SPACE:
+            if (id == 0) isEnable = false;
+            //else if (id = 1)
+            //else if (id = 2)
+            //else if (id = 3)
+            break;
         }
     }
 }
