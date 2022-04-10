@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <iostream>
 #include <conio.h>
+#include "list_functions.h"
 
 #define PRINT(Expression)\
      std::cout << "{" #Expression "}: " << (Expression) <<\
@@ -58,16 +59,48 @@ void drawMenu(int id)
     }
 }
 
-void setListSize()
-{
-
-}
-
 void mainMenu()
 {
     bool isEnable = true;
     int id = 0;
 
+
+
+
+
+
+
+
+
+
+
+    
+    doubleLinkedList *list = createList(5);
+    fillList(list);
+    displayList(list);
+    //displayList(list);
+    //int a = list[3];
+    //std::cout << *reinterpret_cast<int*>(getItem(list, 4));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
     while (isEnable)
     {
         drawMenu(id);
@@ -88,5 +121,5 @@ void mainMenu()
             //else if (id = 3)
             break;
         }
-    }
+    }*/
 }
