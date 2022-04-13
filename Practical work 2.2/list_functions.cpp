@@ -18,7 +18,7 @@ List::List()
 
 List::~List()
 {
-	//erase();
+	erase();
 }
 
 int List::getSize()
