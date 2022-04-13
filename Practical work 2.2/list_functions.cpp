@@ -1,180 +1,208 @@
-#include "list_functions.h"
+#include "List.h"
 #include <iostream>
 
-doubleLinkedList* createList(unsigned Length)
+void error(int index, int size)
 {
-    doubleLinkedList
-        *Curr = 0,
-        *Next = 0;
-    
-    for (unsigned i = 1; i <= Length; ++i)
-    {
-        Curr = new doubleLinkedList;
-
-        Curr->tail = Next;
-
-        if (Next) Next->head = Curr;
-
-        Next = Curr;
-    }
-
-    Curr->head = 0;
-
-    return Curr;
-}
-
-doubleLinkedList* getItem(doubleLinkedList* beg, unsigned index, bool errMsg)
-{
-	while (beg && (index--))
-		beg = beg->tail;
-	
-	//if (errMsg && !beg) std::cout << "Ёлемент списка отсутствует \n";
-
-	return beg;
-}
-
-unsigned size(doubleLinkedList* beg)
-{
-	unsigned length = 0;
-
-	while (beg)
+	while (index < 1 || index > size)
 	{
-		length++;
-		beg = beg->tail;
+		std::cout << "Incorrect index, try again: ";
+		std::cin >> index;
 	}
-	return length;
 }
 
-void erase(doubleLinkedList*& Beg, unsigned Index)
+List::List()
 {
-	if (Index >= size(Beg))
-		return;
+	head = tail = NULL;
+	size = 0;
+}
 
-	doubleLinkedList* Item;
+List::~List()
+{
+	erase();
+}
 
-	if (!Index)
+int List::getSize()
+{
+	return size;
+}
+
+node* List::getElem(int index)
+{
+	node* temp = head;
+
+	error(index, size);
+
+	int i = 1;
+
+	while (i < index && temp)
 	{
-		Item = Beg->tail;
-		delete Beg;
-		Beg = Item;
-		Beg->head = 0;
-		return;
+		temp = temp->next;
+		i++;
 	}
 
-	Item = getItem(Beg, Index - 1, 0);
-	doubleLinkedList* DItem = Item->tail;
-	if (DItem->tail)
+	if (!temp) return 0;
+	else return temp;
+}
+
+void List::delElem(int index)
+{
+	error(index, size);
+
+	int i = 1;
+
+	node* del = head;
+
+	while (i < index)
 	{
-		Item->tail = DItem->tail;
-		Item->tail->head = Item;
+		del = del->next;
+		i++;
+	}
+
+	node* PrevDel = del->prev;
+	node* AfterDel = del->next;
+
+	if (PrevDel != 0 && size != 1)
+		PrevDel->next = AfterDel;
+	if (AfterDel != 0 && size != 1)
+		AfterDel->prev = PrevDel;
+
+	if (index == 1)
+		head = AfterDel;
+	if (index == size)
+		tail = PrevDel;
+
+	delete del;
+	size--;
+}
+
+void List::erase()
+{
+	while (size != 0) delElem(1);
+}
+
+void List::addTail(int num)
+{
+	node* temp = new node;
+	temp->next = 0;
+	temp->data = num;
+	temp->prev = tail;
+
+	if (tail != 0)
+		tail->next = temp;
+
+	if (size == 0)
+		head = tail = temp;
+	else
+		tail = temp;
+	size++;
+}
+
+void List::addHead(int num)
+{
+	node* temp = new node;
+
+	temp->prev = 0;
+	temp->data = num;
+	temp->next = head;
+
+	if (head != 0)
+		head->prev = temp;
+
+	if (size == 0)
+		head = tail = temp;
+	else
+		head = temp;
+	size++;
+}
+
+void List::insert(int index)
+{
+	error(index, size + 1);
+
+	if (index == size + 1)
+	{
+		int data;
+		std::cout << "Input new number: ";
+		std::cin >> data;
+
+		addTail(data);
+		return;
+	}
+	else if (index == 1)
+	{
+		int data;
+		std::cout << "Input new number: ";
+		std::cin >> data;
+
+		addHead(data);
+		return;
+	}
+
+	node* insert = head;
+
+	for (int i = 0; i < index; i++)
+		insert = insert->next;
+
+	node* prevIns = insert->prev;
+
+	node* temp = new node;
+
+	std::cout << "Input new number: ";
+	std::cin >> temp->data;
+
+	if (prevIns != 0 && size != 1)
+		prevIns->next = temp;
+
+	temp->next = insert;
+	temp->prev = prevIns;
+	insert->prev = temp;
+
+	size++;
+}
+
+void List::print()
+{
+	if (size)
+	{
+		node* temp = head;
+		std::cout << "[";
+		while (temp->next != 0)
+		{
+			std::cout << temp->data << ", ";
+			temp = temp->next;
+		}
+		std::cout << temp->data << "]\n";
+	}
+}
+
+void List::print(int index)
+{
+	index++;
+	error(index, size);
+	node* temp;
+
+	if (index <= size / 2)
+	{
+		temp = head;
+		int i = 1;
+
+		for(int i = 1; i < index; i++)
+			temp = temp->next;
 	}
 	else
-		Item->tail = 0;
-	delete DItem;
+	{
+		temp = tail;
+		int i = 1;
+
+		for (int i = 1; i < size - index; i++)
+			temp = temp->prev;
+	}
+
+	std::cout << index << " element: ";
+	std::cout << temp->data << '\n';
 }
 
-void fillList(doubleLinkedList* List)
+void List::swap(int index_1, int index_2)
 {
-	doubleLinkedList* Curr = List;
 
-	while (Curr)
-	{
-		std::cin >> Curr->data;
-		Curr = Curr->tail;
-	}
-}
-
-void displayList(doubleLinkedList* List)
-{
-	doubleLinkedList *Curr = List;
-	while (Curr)
-	{
-		std::cout << Curr->data << " ";
-		Curr = Curr->tail;
-	}
-	std::cout << '\n';
-}
-
-void Delete(doubleLinkedList*& Beg)
-{
-	doubleLinkedList* Next;  
-
-	while (Beg)
-	{
-		Next = Beg->tail;
-		delete Beg;
-		Beg = Next;
-	}
-}
-
-doubleLinkedList* insert(doubleLinkedList*& Beg, unsigned Index)
-{
-	doubleLinkedList* Item = new doubleLinkedList;
-	if (!Index || !Beg)
-	{
-		Beg->head = Item;
-		Item->head = 0;
-		Item->tail = Beg;
-		Beg = Item;
-		return Item;
-	}
-	doubleLinkedList* PredItem = Beg;
-	--Index;
-	while (PredItem->tail && (Index--))
-		PredItem = PredItem->tail;
-	Item->head = PredItem;
-	Item->tail->head = Item;
-	Item->tail = PredItem->tail;
-	PredItem->tail = Item;
-	return Item;
-}
-
-doubleLinkedList* swap(doubleLinkedList* lst1, doubleLinkedList* lst2, doubleLinkedList* head)
-{
-	// ¬озвращает новый корень списка
-	doubleLinkedList* prev1, * prev2, * next1, * next2;
-
-	prev1 = lst1->head;  // узел предшествующий lst1
-	prev2 = lst2->head;  // узел предшествующий lst2
-	next1 = lst1->tail; // узел следующий за lst1
-	next2 = lst2->tail; // узел следующий за lst2
-
-	if (lst2 == next1)  // обмениваютс€ соседние узлы
-	{
-		lst2->tail = lst1;
-		lst2->head = prev1;
-		lst1->tail = next2;
-		lst1->head = lst2;
-
-		if (next2 != NULL) next2->head = lst1;
-		if (lst1 != head) prev1->tail = lst2;
-	}
-	else if (lst1 == next2)  // обмениваютс€ соседние узлы
-	{
-		lst1->tail = lst2;
-		lst1->head = prev2;
-		lst2->tail = next1;
-		lst2->head = lst1;
-
-		if (next1 != NULL) next1->head = lst2;
-		if (lst2 != head) prev2->tail = lst1;
-	}
-	else  // обмениваютс€ отсто€щие узлы
-	{
-		if (lst1 != head)  // указатель prev можно установить только дл€ элемента,
-			prev1->tail = lst2; // не €вл€ющегос€ корневым
-		lst2->tail = next1;
-		if (lst2 != head)
-			prev2->tail = lst1;
-		lst1->tail = next2;
-		lst2->head = prev1;
-
-		if (next2 != NULL) next2->head = lst1; // указатель next можно установить только дл€ элемента, не €вл€ющегос€ последним
-		lst1->head = prev2;
-		if (next1 != NULL) next1->head = lst2;
-	}
-
-	if (lst1 == head) return(lst2);
-	if (lst2 == head) return(lst1);
-	return(head);
 }
