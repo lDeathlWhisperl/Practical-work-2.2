@@ -24,7 +24,7 @@ public:
 
 	void erase();
 
-	void delElem(int);
+	void del(int);
 
 	void insert(int);
 
