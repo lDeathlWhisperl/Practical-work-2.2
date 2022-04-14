@@ -16,8 +16,6 @@ private:
 public:
 	List(); 
 
-	~List();
-
 	int getSize();
 
 	node* getElem(int);

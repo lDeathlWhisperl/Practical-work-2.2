@@ -1,11 +1,11 @@
 #include "List.h"
 #include <iostream>
 
-void error(int index, int size)
+void error(int& index, int size)
 {
-	while (index < 1 || index > size)
+	while (index < 0 || index >= size)
 	{
-		std::cout << "Incorrect index, try again: ";
+		std::cout << "\x1b[31mINCORRECT INDEX, TRY AGAIN \x1b[0m\t";
 		std::cin >> index;
 	}
 }
@@ -16,11 +16,6 @@ List::List()
 	size = 0;
 }
 
-List::~List()
-{
-	erase();
-}
-
 int List::getSize()
 {
 	return size;
@@ -28,8 +23,8 @@ int List::getSize()
 
 node* List::getElem(int index)
 {
-	index++;
 	error(index, size);
+	index++;
 
 	node* temp = head;
 	int i = 1;
@@ -46,16 +41,13 @@ node* List::getElem(int index)
 
 void List::del(int index)
 {
-	index++;
 	error(index, size);
+	index++;
 
 	node* del = head;
 
 	for (int i = 1; i < index; i++)
-	{
-		std::cout << "a\n";
 		del = del->next;
-	}
 
 	node* PrevDel = del->prev;
 	node* AfterDel = del->next;
@@ -116,8 +108,8 @@ void List::addHead(int num)
 
 void List::insert(int index)
 {
-	index++;
 	error(index, size + 1);
+	index++;
 
 	if (index == size + 1)
 	{
@@ -140,7 +132,7 @@ void List::insert(int index)
 
 	node* insert = head;
 
-	for (int i = 0; i < index; i++)
+	for (int i = 1; i < index; i++)
 		insert = insert->next;
 
 	node* prevIns = insert->prev;
@@ -173,8 +165,8 @@ void List::print()
 
 void List::print(int index)
 {
-	index++;
 	error(index, size);
+	index++;
 	node* temp;
 
 	if (index <= size / 2)
@@ -182,7 +174,7 @@ void List::print(int index)
 		temp = head;
 		int i = 1;
 
-		for(int i = 1; i < index; i++)
+		for (int i = 1; i < index; i++)
 			temp = temp->next;
 	}
 	else
@@ -194,16 +186,14 @@ void List::print(int index)
 			temp = temp->prev;
 	}
 
-	std::cout << index << " element: ";
+	std::cout << index - 1 << " element: ";
 	std::cout << temp->data << '\n';
 }
 
 void List::swap(int index_1, int index_2)
 {
-	index_1++, index_2++;
 	error(index_1, size);
 	error(index_2, size);
-	index_1--, index_2--;
 
 	node* first = getElem(index_1);
 	node* second = getElem(index_2);
@@ -214,7 +204,7 @@ void List::swap(int index_1, int index_2)
 		* s_prev = second->prev,
 		* s_next = second->next;
 
-	if(abs(index_1 - index_2) == 1)
+	if (abs(index_1 - index_2) == 1)
 	{
 		second->prev = f_prev;
 		second->next = first;
@@ -225,21 +215,18 @@ void List::swap(int index_1, int index_2)
 		if (s_next != NULL) s_next->prev = first;
 		if (first != head) f_prev->next = second;
 	}
-	else 
+	else
 	{
 		if (first != head) f_prev->next = second;
 		if (second != head) s_prev->next = first;
 
 		second->next = f_next;
-		first->next  = s_next;
+		first->next = s_next;
 
 		second->prev = f_prev;
-		first->prev  = s_prev;
+		first->prev = s_prev;
 
 		if (s_next != NULL) s_next->prev = first;
 		if (f_next != NULL) f_next->prev = second;
 	}
-
-	//std::cout << *reinterpret_cast<int*>((((first->prev)->prev)->prev)->prev) << ' ' << *reinterpret_cast<int*>(((first->prev)->prev)->prev) << ' ' << *reinterpret_cast<int*>((first->prev)->prev) << ' ' << *reinterpret_cast<int*>(first->prev) << ' ' << *reinterpret_cast<int*>(first) << '\n';// << ' ' << *reinterpret_cast<int*>(first->next);
-
 }
