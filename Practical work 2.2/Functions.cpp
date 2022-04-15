@@ -12,19 +12,19 @@ enum colors
 {
     BLACK = 0,
     GREEN = 2,
-    BLUE = 3,
-    RED = 4,
+    BLUE  = 3,
+    RED   = 4,
     WHITE = 15
 };
 enum buttons
 {
-    ENTER = 13,
-    ESC = 27,
-    SPACE = 32,
-    ARROW_UP = 72, // ↑ (24)
-    ARROW_LEFT = 75, // ← (27)
+    ENTER       = 13,
+    ESC         = 27,
+    SPACE       = 32,
+    ARROW_UP    = 72, // ↑ (24)
+    ARROW_LEFT  = 75, // ← (27)
     ARROW_RIGHT = 77, // → (26)
-    ARROW_DOWN = 80  // ↓ (25)
+    ARROW_DOWN  = 80  // ↓ (25)
 };
 
 void fullscreen()
@@ -107,6 +107,17 @@ void exchange(List* list)
 
     system("pause");
 }
+void receive(List* list)
+{
+    system("cls");
+    int pos;
+    std::cout << "\nEnter the index of item (from 0 to the list size): ";
+    std::cin >> pos;
+
+    list->print(pos);
+    std::cout << '\n';
+    system("pause");
+}
 void annihilator(List* list, bool& isChangeable, bool& canBeShowed, bool& isEnable)
 {
     int id = 0;
@@ -135,11 +146,6 @@ void annihilator(List* list, bool& isChangeable, bool& canBeShowed, bool& isEnab
 
         std::cout << " |\n"
             "|                                               |\n"
-            "+===============================================+\n"
-            "| Controls:                                     |\n"
-            "|                                               |\n"
-            "| [a] [d] -> choosing an option                 |\n"
-            "| [Space] -> select                             |\n"
             "+===============================================+\n";
 
         switch (_getch())
@@ -215,7 +221,7 @@ void editingMenu(List* list, bool& isChangeable, bool& canBeShowed)
                     system("pause");
                 }
             }
-            //else if (id == 4)
+            else if (id == 4) receive(list);
             else if (id == 5)
             {
                 system("cls");
