@@ -179,6 +179,7 @@ void annihilator(List* list, bool& isChangeable, bool& canBeShowed, bool& isEnab
                 isEnable = isChangeable = canBeShowed = false;
 
                 std::cout << "\nErased for " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << " nanoseconds\n";
+                system("pause");
             }
             break;
         }
