@@ -2,11 +2,18 @@
 #include "List.h"
 #include <windows.h>
 #include <iostream>
+#include <iomanip>
 #include <conio.h> 
+#include <chrono>
 
-#define PRINT(Expression)\
-     std::cout << "[" #Expression "]: " << (Expression) <<\
-     		std::endl;
+void error(int& index, int size)
+{
+    while (index < 0 || index >= size)
+    {
+        std::cout << "\x1b[31mINCORRECT INDEX, TRY AGAIN: \x1b[0m\t";
+        std::cin >> index;
+    }
+}
 
 enum colors
 {
@@ -41,34 +48,6 @@ int getRandomNumber(int min, int max)
     return min + rand() % (max - min + 1);
 }
 
-void drawEditingMenu(int id)
-{
-    system("cls");
-    std::cout << '\n';
-    char menu[][22] = {
-        "[    Back to menu   ]",
-        "[  Insert an item   ]",
-        "[  Delete an item   ]",
-        "[ Exchange an items ]",
-        "[  Receive an item  ]",
-        "[   Show the list   ]",
-        "[  Erase the list   ]" };
-
-    for (int i = 0; i < 7; i++)
-    {
-        if (i == id)
-        {
-            std::cout << "   ";
-            if (id != 0 && id != 5 && id != 6) setColor(BLACK, GREEN);
-            else if (id == 0) setColor(BLACK, BLUE);
-            else if (id == 5) setColor(BLACK, WHITE);
-            else if (id == 6) setColor(BLACK, RED);
-        }
-        std::cout << menu[i] << '\n';
-        setColor(WHITE, BLACK);
-        if (i == 4) std::cout << "---------------------\n";
-    }
-}
 void insert(List* list)
 {
     system("cls");
@@ -76,7 +55,13 @@ void insert(List* list)
     std::cout << "\nEnter the position for inserting (from 0 to the list size): ";
     std::cin >> pos;
 
+    error(pos, list->getSize()+1);
+
+    auto begin = std::chrono::steady_clock::now();
     list->insert(pos);
+    auto end = std::chrono::steady_clock::now();
+    std::cout << "\nInserted for " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << " seconds (because of the insert inside the method)\n";
+    system("pause");
 }
 void deleting(List* list, bool& isChangeable, bool& canBeShowed, bool& isEnable)
 {
@@ -85,7 +70,13 @@ void deleting(List* list, bool& isChangeable, bool& canBeShowed, bool& isEnable)
     std::cout << "\nEnter the index of deleteable item (from 0 to the list size): ";
     std::cin >> pos;
 
+    error(pos, list->getSize());
+
+    auto begin = std::chrono::steady_clock::now();
     list->del(pos);
+    auto end = std::chrono::steady_clock::now();
+    std::cout << "\nDeleted for " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << " nanoseconds\n";
+    system("pause");
     if (!list->getSize()) isEnable = canBeShowed = isChangeable = false;
 }
 void exchange(List* list)
@@ -95,16 +86,22 @@ void exchange(List* list)
     std::cout << "\nEnter the two indexes that will be swaped (from 0 to the list size): ";
     std::cin >> num_1 >> num_2;
 
+    error(num_1, list->getSize());
+    error(num_2, list->getSize());
+
     std::cout << "\nlist: [ ";
     list->print();
     std::cout << "]\n";
 
+    auto begin = std::chrono::steady_clock::now();
     list->swap(num_1, num_2);
+    auto end = std::chrono::steady_clock::now();
 
     std::cout << "\nlist: [ ";
     list->print();
     std::cout << ']' << '\n';
 
+    std::cout << "\nSwapped for " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << " nanoseconds\n";
     system("pause");
 }
 void receive(List* list)
@@ -114,8 +111,13 @@ void receive(List* list)
     std::cout << "\nEnter the index of item (from 0 to the list size): ";
     std::cin >> pos;
 
+    error(pos, list->getSize());
+
+    auto begin = std::chrono::steady_clock::now();
     list->print(pos);
-    std::cout << '\n';
+    auto end = std::chrono::steady_clock::now();
+
+    std::cout << "\nReceived for " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << " nanoseconds\n";
     system("pause");
 }
 void annihilator(List* list, bool& isChangeable, bool& canBeShowed, bool& isEnable)
@@ -171,13 +173,46 @@ void annihilator(List* list, bool& isChangeable, bool& canBeShowed, bool& isEnab
             isChoosen = false;
             if (id == 1)
             {
+                auto begin = std::chrono::steady_clock::now();
                 list->erase();
+                auto end = std::chrono::steady_clock::now();
                 isEnable = isChangeable = canBeShowed = false;
+
+                std::cout << "\nErased for " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << " nanoseconds\n";
             }
             break;
         }
     }
 
+}
+
+void drawEditingMenu(int id)
+{
+    system("cls");
+    std::cout << '\n';
+    char menu[][22] = {
+        "[    Back to menu   ]",
+        "[  Insert an item   ]",
+        "[  Delete an item   ]",
+        "[ Exchange an items ]",
+        "[  Receive an item  ]",
+        "[   Show the list   ]",
+        "[  Erase the list   ]" };
+
+    for (int i = 0; i < 7; i++)
+    {
+        if (i == id)
+        {
+            std::cout << "   ";
+            if (id != 0 && id != 5 && id != 6) setColor(BLACK, GREEN);
+            else if (id == 0) setColor(BLACK, BLUE);
+            else if (id == 5) setColor(BLACK, WHITE);
+            else if (id == 6) setColor(BLACK, RED);
+        }
+        std::cout << menu[i] << '\n';
+        setColor(WHITE, BLACK);
+        if (i == 4) std::cout << "---------------------\n";
+    }
 }
 void editingMenu(List* list, bool& isChangeable, bool& canBeShowed)
 {
@@ -236,6 +271,56 @@ void editingMenu(List* list, bool& isChangeable, bool& canBeShowed)
     }
 }
 
+void setSize(List* list, bool& isChangeable, bool& canBeShowed)
+{
+    system("cls");
+    int size;
+    std::cout << "\nEnter the list size: ";
+    std::cin >> size;
+
+    srand(static_cast<unsigned int>(time(NULL)));
+    for (int i = 0; i < size; i++)
+        list->addTail(getRandomNumber(0, 99));
+    if (list->getSize()) canBeShowed = isChangeable = true;
+}
+void inputItems(List* list, bool& isChangeable, bool& canBeShowed)
+{
+    system("cls");
+    int num = '0';
+
+    std::cout << "\nEnter any character (not a number) to complete the sequence";
+    std::cout << "\nThe list will be filled by the next numbers: ";
+
+    while (std::cin >> num)
+        list->addTail(num);
+
+    std::cin.clear();
+    std::cin.ignore(32767, '\n');
+
+    if (list->getSize()) canBeShowed = isChangeable = true;
+}
+
+void manual()
+{
+    std::cout << 
+        "+============================================+\n"
+        "|                   Manual                   |\n"
+        "+============================================+\n"
+        "| [w] -> scroll up       (alt: arrow up)     |\n"
+        "| [s] -> scroll down     (alt: arrow down)   |\n"
+        "| [a] -> switch left     (alt: arrow left)   |\n"
+        "| [d] -> switch right    (alt: arrow right)  |\n"
+        "| [space] -> select      (alt: enter)        |\n"
+        "+============================================+\n"
+        "| P.S.                                       |\n";
+
+    auto begin = std::chrono::steady_clock::now();
+    List list;
+    auto end = std::chrono::steady_clock::now();
+    std::cout << "| List created for " << std::left << std::setw(5) << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << " nanoseconds         |\n";
+    std::cout << "+============================================+\n";
+}
+
 void drawMainMenu(int id, bool isChangeable, bool canBeShowed)
 {
     system("cls");
@@ -264,46 +349,20 @@ void drawMainMenu(int id, bool isChangeable, bool canBeShowed)
         if (i == 3) std::cout << "---------------------------------------------------------\n";
     }
 }
-void setSize(List* list, bool& isChangeable, bool& canBeShowed)
-{
-    system("cls");
-    int size;
-    std::cout << "\nEnter the list size: ";
-    std::cin >> size;
-
-    srand(static_cast<unsigned int>(time(NULL)));
-    for (int i = 0; i < size; i++)
-        list->addTail(getRandomNumber(0, 99));
-    if (list->getSize()) canBeShowed = isChangeable = true;
-}
-void inputItems(List* list, bool& isChangeable, bool& canBeShowed)
-{
-    system("cls");
-    char num = '0';
-
-    std::cout << "\nEnter any character (not a number) to complete the sequence";
-    std::cout << "\nThe list will be filled by the next numbers: ";
-
-    while (true)
-    {
-        std::cin >> num;
-        if (isdigit(num))
-            list->addTail(static_cast<int>(num) - 48);
-        else
-            break;
-    }
-
-    if (list->getSize()) canBeShowed = isChangeable = true;
-}
-
 void mainMenu()
 {
     bool isEnable = true,
         isChangeable = false,
         canBeShowed = false;
     int id = 0;
+
+    
+    manual();
+
     List list;
 
+    system("pause");
+    system("cls");
     while (isEnable)
     {
         drawMainMenu(id, isChangeable, canBeShowed);

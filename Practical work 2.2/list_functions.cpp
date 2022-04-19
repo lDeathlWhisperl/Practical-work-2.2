@@ -1,15 +1,6 @@
 #include "List.h"
 #include <iostream>
 
-void error(int& index, int size)
-{
-	while (index < 0 || index >= size)
-	{
-		std::cout << "\x1b[31mINCORRECT INDEX, TRY AGAIN \x1b[0m\t";
-		std::cin >> index;
-	}
-}
-
 List::List()
 {
 	head = tail = NULL;
@@ -23,7 +14,6 @@ int List::getSize()
 
 node* List::getElem(int index)
 {
-	error(index, size);
 	index++;
 
 	node* temp = head;
@@ -41,7 +31,6 @@ node* List::getElem(int index)
 
 void List::del(int index)
 {
-	error(index, size);
 	index++;
 
 	node* del = head;
@@ -108,7 +97,6 @@ void List::addHead(int num)
 
 void List::insert(int index)
 {
-	error(index, size + 1);
 	index++;
 
 	if (index == size + 1)
@@ -165,7 +153,6 @@ void List::print()
 
 void List::print(int index)
 {
-	error(index, size);
 	index++;
 	node* temp;
 
@@ -186,15 +173,12 @@ void List::print(int index)
 			temp = temp->prev;
 	}
 
-	std::cout << index - 1 << " element: ";
+	std::cout << '[' << index - 1 << "] element: ";
 	std::cout << temp->data << '\n';
 }
 
 void List::swap(int index_1, int index_2)
 {
-	error(index_1, size);
-	error(index_2, size);
-
 	node* first = getElem(index_1);
 	node* second = getElem(index_2);
 
@@ -217,9 +201,9 @@ void List::swap(int index_1, int index_2)
 	}
 	else
 	{
-		if (first != head) f_prev->next = second;
+		if (first != head)  f_prev->next = second;
 		if (second != head) s_prev->next = first;
-
+		
 		second->next = f_next;
 		first->next = s_next;
 
@@ -229,4 +213,7 @@ void List::swap(int index_1, int index_2)
 		if (s_next != NULL) s_next->prev = first;
 		if (f_next != NULL) f_next->prev = second;
 	}
+
+	while (head->prev) head = head->prev;
+	while (tail->next) tail = tail->next;
 }
