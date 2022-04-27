@@ -51,16 +51,19 @@ int getRandomNumber(int min, int max)
 void insert(List* list)
 {
     system("cls");
-    int pos;
+    int pos, num;
     std::cout << "\nEnter the position for inserting (from 0 to the list size): ";
     std::cin >> pos;
+    std::cout << "\nInput the number: ";
+    std::cin >> num;
 
     error(pos, list->getSize()+1);
 
     auto begin = std::chrono::steady_clock::now();
-    list->insert(pos);
+    list->insert(pos, num);
     auto end = std::chrono::steady_clock::now();
-    std::cout << "\nInserted for " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << " seconds (because of the insert inside the method)\n";
+
+    std::cout << "\nInserted for " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << " nanoseconds\n";
     system("pause");
 }
 void deleting(List* list, bool& isChangeable, bool& canBeShowed, bool& isEnable)
@@ -75,8 +78,10 @@ void deleting(List* list, bool& isChangeable, bool& canBeShowed, bool& isEnable)
     auto begin = std::chrono::steady_clock::now();
     list->del(pos);
     auto end = std::chrono::steady_clock::now();
+
     std::cout << "\nDeleted for " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << " nanoseconds\n";
     system("pause");
+
     if (!list->getSize()) isEnable = canBeShowed = isChangeable = false;
 }
 void exchange(List* list)
@@ -86,8 +91,16 @@ void exchange(List* list)
     std::cout << "\nEnter the two indexes that will be swaped (from 0 to the list size): ";
     std::cin >> num_1 >> num_2;
 
-    error(num_1, list->getSize());
-    error(num_2, list->getSize());
+    if (num_1 < 0 || num_1 >= list->getSize())
+    {
+        std::cout << "\x1b[31m[FIRST INDEX]: \x1b[0m\t";
+        error(num_1, list->getSize());
+    }
+    if (num_2 < 0 || num_2 >= list->getSize())
+    {
+        std::cout << "\x1b[31m[SECOND INDEX]: \x1b[0m\t";
+        error(num_2, list->getSize());
+    }
 
     std::cout << "\nlist: [ ";
     list->print();
@@ -182,6 +195,9 @@ void annihilator(List* list, bool& isChangeable, bool& canBeShowed, bool& isEnab
                 system("pause");
             }
             break;
+        case ESC:
+            isChoosen = false;
+            break;
         }
     }
 
@@ -268,6 +284,8 @@ void editingMenu(List* list, bool& isChangeable, bool& canBeShowed)
             }
             else if (id == 6) annihilator(list, isChangeable, canBeShowed, isEnable);
             break;
+        case ESC:
+            isEnable = false;
         }
     }
 }
@@ -304,22 +322,23 @@ void inputItems(List* list, bool& isChangeable, bool& canBeShowed)
 void manual()
 {
     std::cout << 
-        "+============================================+\n"
-        "|                   Manual                   |\n"
-        "+============================================+\n"
-        "| [w] -> scroll up       (alt: arrow up)     |\n"
-        "| [s] -> scroll down     (alt: arrow down)   |\n"
-        "| [a] -> switch left     (alt: arrow left)   |\n"
-        "| [d] -> switch right    (alt: arrow right)  |\n"
-        "| [space] -> select      (alt: enter)        |\n"
-        "+============================================+\n"
-        "| P.S.                                       |\n";
+        "+=============================================+\n"
+        "|                   Manual                    |\n"
+        "+=============================================+\n"
+        "| [w]     -> scroll up    (alt: arrow up)     |\n"
+        "| [s]     -> scroll down  (alt: arrow down)   |\n"
+        "| [a]     -> switch left  (alt: arrow left)   |\n"
+        "| [d]     -> switch right (alt: arrow right)  |\n"
+        "| [space] -> select       (alt: enter)        |\n"
+        "| [esc]   -> exit/back    (only in menu)      |\n"
+        "+=============================================+\n"
+        "| P.S.                                        |\n";
 
     auto begin = std::chrono::steady_clock::now();
     List list;
     auto end = std::chrono::steady_clock::now();
-    std::cout << "| List created for " << std::left << std::setw(5) << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << " nanoseconds         |\n";
-    std::cout << "+============================================+\n";
+    std::cout << "| List created for " << std::left << std::setw(5) << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << " nanoseconds          |\n";
+    std::cout << "+=============================================+\n";
 }
 
 void drawMainMenu(int id, bool isChangeable, bool canBeShowed)
@@ -399,6 +418,9 @@ void mainMenu()
                 std::cout << "] \nsize: " << list.getSize() << "\n\n";
                 system("pause");
             }
+            break;
+        case ESC:
+            isEnable = false;
             break;
         }
     }

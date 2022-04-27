@@ -21,7 +21,7 @@
     <ClCompile Include="Functions.cpp">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
-    <ClCompile Include="list_functions.cpp">
+    <ClCompile Include="list.cpp">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
   </ItemGroup>

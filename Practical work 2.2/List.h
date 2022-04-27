@@ -24,7 +24,7 @@ public:
 
 	void del(int);
 
-	void insert(int);
+	void insert(int, int);
 
 	void addTail(int);
 

@@ -14,16 +14,10 @@ int List::getSize()
 
 node* List::getElem(int index)
 {
-	index++;
-
 	node* temp = head;
-	int i = 1;
 
-	while (i < index && temp)
-	{
+	for(int i = 0; i < index; i++)
 		temp = temp->next;
-		i++;
-	}
 
 	if (!temp) return 0;
 	else return temp;
@@ -31,12 +25,7 @@ node* List::getElem(int index)
 
 void List::del(int index)
 {
-	index++;
-
-	node* del = head;
-
-	for (int i = 1; i < index; i++)
-		del = del->next;
+	node* del = getElem(index);
 
 	node* PrevDel = del->prev;
 	node* AfterDel = del->next;
@@ -46,9 +35,9 @@ void List::del(int index)
 	if (AfterDel != 0 && size != 1)
 		AfterDel->prev = PrevDel;
 
-	if (index == 1)
+	if (index == 0)
 		head = AfterDel;
-	if (index == size)
+	if (index == size-1)
 		tail = PrevDel;
 
 	delete del;
@@ -95,40 +84,26 @@ void List::addHead(int num)
 	size++;
 }
 
-void List::insert(int index)
+void List::insert(int index, int data)
 {
-	index++;
-
-	if (index == size + 1)
+	if (index == size)
 	{
-		int data;
-		std::cout << "Input new number: ";
-		std::cin >> data;
-
 		addTail(data);
 		return;
 	}
-	else if (index == 1)
+	else if (index == 0)
 	{
-		int data;
-		std::cout << "Input new number: ";
-		std::cin >> data;
-
 		addHead(data);
 		return;
 	}
 
-	node* insert = head;
-
-	for (int i = 1; i < index; i++)
-		insert = insert->next;
+	node* insert = getElem(index);
 
 	node* prevIns = insert->prev;
 
 	node* temp = new node;
 
-	std::cout << "Input new number: ";
-	std::cin >> temp->data;
+	temp->data = data;
 
 	if (prevIns != 0 && size != 1)
 		prevIns->next = temp;
