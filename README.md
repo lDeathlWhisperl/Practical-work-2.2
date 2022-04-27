@@ -15,3 +15,5 @@
   После того как в списке появится хотя бы один элемент, пункты станут доступны и будут выделяться зеленым цветом.<br>
   Отсюда следует, что если в процессе манипуляций список опустеет, то пользователь будет перекинут обратно в главное меню для заполнения списка<br>
 </p>
+
+<img src="https://w7.pngwing.com/pngs/121/594/png-transparent-pepe-the-frog-pepe-the-frog-telegram-sticker-decal-others-vertebrate-meme-fictional-character-thumbnail.png">
