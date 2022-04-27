@@ -16,4 +16,4 @@
   Отсюда следует, что если в процессе манипуляций список опустеет, то пользователь будет перекинут обратно в главное меню для заполнения списка<br>
 </p>
 
-<img src="https://psv4.userapi.com/c536132/u82712113/docs/d45/bf64ed830fda/pngegg_1.png?extra=Rat405wBZq4whdSpPfaU3y0gIVfWP82iWDq5ioqEVyQoVvBDPo8nn8e6zZZN85DfLWfNn7zPNoAtCRBrmtVCZOL7SQBdKEY_C733LBHCXC-H3R68KRKLCJM3vhEcEwvdceaomC70R6ziVK7McL-PdY0">
+<img src="https://psv4.userapi.com/c536132/u82712113/docs/d45/bf64ed830fda/pngegg_1.png?extra=Rat405wBZq4whdSpPfaU3y0gIVfWP82iWDq5ioqEVyQoVvBDPo8nn8e6zZZN85DfLWfNn7zPNoAtCRBrmtVCZOL7SQBdKEY_C733LBHCXC-H3R68KRKLCJM3vhEcEwvdceaomC70R6ziVK7McL-PdY0" width="250" height="250">
