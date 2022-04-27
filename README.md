@@ -16,4 +16,4 @@
   Отсюда следует, что если в процессе манипуляций список опустеет, то пользователь будет перекинут обратно в главное меню для заполнения списка<br>
 </p>
 
-<img src="https://w7.pngwing.com/pngs/121/594/png-transparent-pepe-the-frog-pepe-the-frog-telegram-sticker-decal-others-vertebrate-meme-fictional-character-thumbnail.png">
+<img src="https://psv4.userapi.com/c536132/u82712113/docs/d19/115a732d6c8e/pngegg.png?extra=MZPnaOK2Tz89JZjmq67DCWTEoGoATZTsBNebvyvZCfaHFyb8VC8uWeOad0RmGfr8DFauJJ-4z4510IJpLFa2SWe4nWR4-z3L9yLdQkVcH5io-aWSE7jM0iFUj5o_XYPcFMNccoqL1PUZoLl70BO8aLY" alt="Тут должна быть фоточка лягушки">
