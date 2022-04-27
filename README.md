@@ -16,4 +16,4 @@
   Отсюда следует, что если в процессе манипуляций список опустеет, то пользователь будет перекинут обратно в главное меню для заполнения списка<br>
 </p>
 
-<img src="https://psv4.userapi.com/c536132/u82712113/docs/d19/115a732d6c8e/pngegg.png?extra=MZPnaOK2Tz89JZjmq67DCWTEoGoATZTsBNebvyvZCfaHFyb8VC8uWeOad0RmGfr8DFauJJ-4z4510IJpLFa2SWe4nWR4-z3L9yLdQkVcH5io-aWSE7jM0iFUj5o_XYPcFMNccoqL1PUZoLl70BO8aLY" alt="Тут должна быть фоточка лягушки">
+<img src="hhttps://psv4.userapi.com/c536132/u82712113/docs/d11/26b8a37f1d5f/pngegg.png?extra=fV9YogJS6NDKQt_MmUkd83H_LDkpk0lTt2gyKwTK2_8pesk8rIy2AZxpqc2LywH67KgB-CWfoxS-69DudMT7q5jhmLhTcOzieQyk_aZ_Asdybo85KoqswNx0oLYSh9xuu2Je8-pD6WHS_ZSWphq1fZo">
