@@ -165,16 +165,12 @@ void annihilator(List* list, bool& isChangeable, bool& canBeShowed, bool& isEnab
 
         switch (_getch())
         {
-        case 'Ф':
-        case 'ф':
         case 'A':
         case 'a':
         case ARROW_LEFT:
             if (id != 0) id--;
             else id = 1;
             break;
-        case 'В':
-        case 'в':
         case 'D':
         case 'd':
         case ARROW_RIGHT:
@@ -241,16 +237,12 @@ void editingMenu(List* list, bool& isChangeable, bool& canBeShowed)
         drawEditingMenu(id);
         switch (_getch())
         {
-        case 'Ц':
-        case 'ц':
         case 'W':
         case 'w':
         case ARROW_UP:
             if (id != 0) id--;
             else id = 6;
             break;
-        case 'Ы':
-        case 'ы':
         case 'S':
         case 's':
         case ARROW_DOWN:
@@ -388,16 +380,12 @@ void mainMenu()
         drawMainMenu(id, isChangeable, canBeShowed);
         switch (_getch())
         {
-        case 'Ц':
-        case 'ц':
         case 'W':
         case 'w':
         case ARROW_UP:
             if (id != 0) id--;
             else id = 4;
             break;
-        case 'Ы':
-        case 'ы':
         case 'S':
         case 's':
         case ARROW_DOWN:
