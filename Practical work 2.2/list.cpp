@@ -7,6 +7,11 @@ List::List()
 	size = 0;
 }
 
+List::~List()
+{
+	erase();
+}
+
 int List::getSize()
 {
 	return size;
