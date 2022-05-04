@@ -32,9 +32,9 @@ public:
 
 	void addHead(int);
 
-	void print();
+	void print(int a = -1, int b = -1);
 
-	void print(int);
+	void print(unsigned int);
 
 	void swap(int, int);
 };

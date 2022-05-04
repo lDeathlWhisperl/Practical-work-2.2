@@ -10,7 +10,7 @@ void error(int& index, int size)
 {
     while (index < 0 || index >= size)
     {
-        std::cout << "\x1b[31mINCORRECT INDEX, TRY AGAIN: \x1b[0m\t";
+        std::cout << "\x1b[31m[INCORRECT INDEX, TRY AGAIN]: \x1b[0m";
         std::cin >> index;
     }
 }
@@ -52,12 +52,14 @@ void insert(List* list)
 {
     system("cls");
     int pos, num;
-    std::cout << "\nEnter the position for inserting (from 0 to the list size): ";
+    std::cout << "\nEnter the position for inserting [0," << list->getSize() << "]: ";
     std::cin >> pos;
+
+    error(pos, list->getSize() + 1);
+
     std::cout << "\nInput the number: ";
     std::cin >> num;
 
-    error(pos, list->getSize()+1);
 
     auto begin = std::chrono::steady_clock::now();
     list->insert(pos, num);
@@ -70,7 +72,7 @@ void deleting(List* list, bool& isChangeable, bool& canBeShowed, bool& isEnable)
 {
     system("cls");
     int pos;
-    std::cout << "\nEnter the index of deleteable item (from 0 to the list size): ";
+    std::cout << "\nEnter the index of deleteable item [0," << list->getSize()-1<< "]: ";
     std::cin >> pos;
 
     error(pos, list->getSize());
@@ -88,7 +90,7 @@ void exchange(List* list)
 {
     system("cls");
     int num_1, num_2;
-    std::cout << "\nEnter the two indexes that will be swaped (from 0 to the list size): ";
+    std::cout << "\nEnter the two indexes that will be swaped [0," << list->getSize() - 1 << "]: ";
     std::cin >> num_1 >> num_2;
 
     if (num_1 < 0 || num_1 >= list->getSize())
@@ -103,7 +105,7 @@ void exchange(List* list)
     }
 
     std::cout << "\nlist: [ ";
-    list->print();
+    list->print(num_1, num_2);
     std::cout << "]\n";
 
     auto begin = std::chrono::steady_clock::now();
@@ -111,7 +113,7 @@ void exchange(List* list)
     auto end = std::chrono::steady_clock::now();
 
     std::cout << "\nlist: [ ";
-    list->print();
+    list->print(num_1, num_2);
     std::cout << ']' << '\n';
 
     std::cout << "\nSwapped for " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << " nanoseconds\n";
@@ -121,13 +123,13 @@ void receive(List* list)
 {
     system("cls");
     int pos;
-    std::cout << "\nEnter the index of item (from 0 to the list size): ";
+    std::cout << "\nEnter the index of item [0," << list->getSize() - 1 << "]: ";
     std::cin >> pos;
 
     error(pos, list->getSize());
 
     auto begin = std::chrono::steady_clock::now();
-    list->print(pos);
+    list->print((unsigned)pos);
     auto end = std::chrono::steady_clock::now();
 
     std::cout << "\nReceived for " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << " nanoseconds\n";

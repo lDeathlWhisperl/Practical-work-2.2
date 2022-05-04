@@ -120,41 +120,42 @@ void List::insert(int index, int data)
 	size++;
 }
 
-void List::print()
+void List::print(int index_1, int index_2)
 {
 	node* p = tail;
+	int i = 0;
 	while (p->prev != NULL)
 		p = p->prev;
 	do {
+		if (i == index_1) std::cout << "\x1b[32m";
+		if (i == index_2) std::cout << "\x1b[34m";
 		std::cout << p->data << ' ';
+		if (i == index_1 || i == index_2) std::cout << "\x1b[0m";
 		p = p->next;
+		i++;
 	} while (p != NULL);
 }
 
-void List::print(int index)
+void List::print(unsigned int index)
 {
-	index++;
 	node* temp;
 
-	if (index <= size / 2)
+	if (index < size / 2)
 	{
 		temp = head;
-		int i = 1;
 
-		for (int i = 1; i < index; i++)
+		for (int i = 0; i < index; i++)
 			temp = temp->next;
 	}
 	else
 	{
 		temp = tail;
-		int i = 1;
 
-		for (int i = 1; i < size - index; i++)
+		for (int i = 0; i < size - index-1; i++)
 			temp = temp->prev;
 	}
 
-	std::cout << '[' << index - 1 << "] element: ";
-	std::cout << temp->data << '\n';
+	std::cout << '[' << index << "] element: " << temp->data << '\n';
 }
 
 void List::swap(int index_1, int index_2)
