@@ -17,4 +17,6 @@
   А также перед работой следует установить английскую раскладку :) (регистр не важен)
 </p>
 
-<img src="https://psv4.userapi.com/c536132/u82712113/docs/d45/bf64ed830fda/pngegg_1.png?extra=Rat405wBZq4whdSpPfaU3y0gIVfWP82iWDq5ioqEVyQoVvBDPo8nn8e6zZZN85DfLWfNn7zPNoAtCRBrmtVCZOL7SQBdKEY_C733LBHCXC-H3R68KRKLCJM3vhEcEwvdceaomC70R6ziVK7McL-PdY0" width="250" height="250">
+<img src="https://user-images.githubusercontent.com/62991413/170836327-4eaaffa3-9e71-4d03-9bdc-cdf0bcf92654.png" width="250" height="250" alt="Тут должен быть котик с ноутом">
+
+
